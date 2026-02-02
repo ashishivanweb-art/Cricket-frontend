@@ -1,0 +1,7 @@
+{
+  "name": "cricket-scoring",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
