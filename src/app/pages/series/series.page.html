@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Series</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let s of seriesList" (click)="openSeries(s._id)">
+      <ion-label>
+     
+        <h1>{{s.name}}</h1>
+          <h2>Series ID: {{ s._id }}</h2>
+        <p>Matches inside: {{ s.totalMatches }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Scorecard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="scorecard">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{ scorecard.teamA.name }} vs {{ scorecard.teamB.name }}
+      </ion-card-title>
+      <ion-card-subtitle>
+          <ion-icon name="location-outline"></ion-icon>
+          {{ scorecard.venue }}
+      </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <!-- If match not started -->
+  <ion-card *ngIf="scorecard.status === 'upcoming'">
+    <ion-card-content>
+      🕒 Match not started yet. Waiting for toss.
+    </ion-card-content>
+  </ion-card>
+
+  <!-- If match live -->
+  <ion-card *ngIf="scorecard.status !== 'upcoming'">
+    <ion-card-header>
+      <ion-card-title>
+        {{ scorecard.battingTeam?.name }}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <h1>{{ scorecard.totalRuns }} / {{ scorecard.wickets }}</h1>
+      <p>Overs: {{ scorecard.overs }}</p>
+      <p>Inning: {{ scorecard.inning }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Live Players -->
+<ion-card *ngIf="scorecard.status !== 'upcoming'">
+  <ion-card-header>
+    <ion-card-title>On Field</ion-card-title>
+  </ion-card-header>
+
+  <ion-card *ngIf="lastOver.length">
+  <ion-card-header>
+    <ion-card-title>This Over</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div class="over-balls">
+      <span *ngFor="let ball of lastOver" class="ball">
+        {{ ball.runs === 0 ? '•' : ball.runs }}
+      </span>
+    </div>
+  </ion-card-content>
+</ion-card>
+
+
+  <ion-card-content>
+    <p><strong>Batting:</strong> {{ scorecard.battingTeam?.name }}</p>
+
+    <p>
+      🏏 Striker:
+      <strong>{{ scorecard.striker?.name }}</strong>
+    </p>
+
+    <p>
+      🏃 Non-Striker:
+      <strong>{{ scorecard.nonStriker?.name }}</strong>
+    </p>
+
+    <p>
+      🎯 Bowler:
+      <strong>{{ scorecard.currentBowler?.name }}</strong>
+    </p>
+  </ion-card-content>
+</ion-card>
+
+
+</ion-content>

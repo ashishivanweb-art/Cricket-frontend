@@ -1,0 +1,94 @@
+<ion-content fullscreen="true" class="ion-padding dark-bg">
+    <div class="p-3 space-y-6">
+  <div class="space-y-1">
+      <h1 class="text-3xl font-bold tracking-wide">🏏 Cricket Live</h1>
+      <p class="text-slate-400 text-sm">Real-time scoring & match tracking</p>
+    </div>
+
+  <div class="p-3 pt-9 text-white">
+
+
+  <h1 class="text-xl font-bold mb-4">Pre Match Setup</h1>
+
+  <!-- Teams Playing 11 -->
+  <div class="grid grid-cols-2 gap-3">
+
+    <!-- Team A -->
+     <div class="bg-slate-900 p-3 rounded-xl">
+    <h2 class="font-bold mb-2">{{ teamA?.name }} Playing 11</h2>
+    <div *ngFor="let p of teamA?.players">
+      <label class="flex items-center gap-2">
+        <input type="checkbox"
+               (change)="togglePlayer('A', p?._id, $event)">
+        {{ p?.name }}
+      </label>
+    </div>
+  </div>
+
+    <!-- Team B -->
+     <div class="bg-slate-900 p-3 rounded-xl">
+    <h2 class="font-bold mb-2">{{ teamB?.name }} Playing 11</h2>
+    <div *ngFor="let p of teamB?.players">
+      <label class="flex items-center gap-2">
+        <input type="checkbox"
+               (change)="togglePlayer('B', p?._id, $event)">
+        {{ p?.name }}
+      </label>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- Toss -->
+  <div class="bg-slate-900 p-3 rounded-xl mt-4">
+    <h2 class="font-bold mb-2">Toss</h2>
+
+    <select class="text-black p-2 rounded w-full mb-2"
+      (change)="tossWinner = $any($event.target).value; onTossChange()">
+      <option value="">Select Toss Winner</option>
+      <option [value]="teamA?._id">{{ teamA?.name }}</option>
+      <option [value]="teamB?._id">{{ teamB?.name }}</option>
+    </select>
+
+    <select class="text-black p-2 rounded w-full"
+      (change)="tossDecision = $any($event.target).value; onTossChange()">
+      <option value="">Decision</option>
+      <option value="bat">Bat</option>
+      <option value="bowl">Bowl</option>
+    </select>
+  </div>
+
+  <!-- Openers & Bowler -->
+  <div class="bg-slate-900 p-3 rounded-xl mt-4">
+    <h2 class="font-bold mb-2">Opening Players</h2>
+
+    <select class="text-black p-2 rounded w-full mb-2"
+      (change)="striker = $any($event.target).value">
+      <option value="">Select Striker</option>
+      <option *ngFor="let p of batting11" [value]="p?._id">{{ p?.name }}</option>
+    </select>
+
+    <select class="text-black p-2 rounded w-full mb-2"
+      (change)="nonStriker = $any($event.target).value">
+      <option value="">Select Non-Striker</option>
+      <option *ngFor="let p of batting11" [value]="p?._id">{{ p?.name }}</option>
+    </select>
+
+    <select class="text-black p-2 rounded w-full"
+      (change)="bowler = $any($event.target).value">
+      <option value="">Select Bowler</option>
+      <option *ngFor="let p of bowling11" [value]="p?._id">{{ p?.name }}</option>
+    </select>
+  </div>
+
+  <!-- Start Match -->
+  <button
+    class="w-full mt-6 bg-green-600 py-4 rounded-xl font-bold"
+    (click)="startMatch()">
+    START MATCH
+  </button>
+
+</div>
+</div>
+
+</ion-content>

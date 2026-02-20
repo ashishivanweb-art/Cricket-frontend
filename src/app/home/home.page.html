@@ -1,20 +1,54 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="dark-bg text-white">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="p-5 space-y-6">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <!-- Header -->
+    <div class="space-y-1">
+      <h1 class="text-3xl font-bold tracking-wide">🏏 Cricket Live</h1>
+      <p class="text-slate-400 text-sm">Real-time scoring & match tracking</p>
+    </div>
+
+    <!-- Live Match Card -->
+    <div class="glass-card p-5 space-y-3">
+
+     <h2 class="text-lg font-semibold mb-3">🔴 Live Matches</h2>
+
+<div class="flex gap-4 overflow-x-auto pb-2 no-scrollbar">
+
+  <div
+    class="min-w-[450px]"
+    *ngFor="let match of liveMatches"
+  >
+    <app-live-card
+  [teamA]="match.teamA.shortName"
+  [teamB]="match.teamB.shortName"
+  [teamAScore]="match.teamAScore"
+  [teamBScore]="match.teamBScore"
+  [overs]="match.overs"
+  [venue]="match.venue"
+  [status]="match.status"
+  (viewScorecard)="goToScorecard(match._id)">
+</app-live-card>
+
   </div>
+
+</div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div>
+      <h3 class="text-lg font-semibold mb-3">Quick Actions</h3>
+
+      <div class="grid grid-cols-2 gap-4">
+
+        <button class="action-btn">Matches</button>
+        <button class="action-btn">Series</button>
+        <button class="action-btn">Teams</button>
+        <button class="action-btn" (click)="adminNavigate()">Admin</button>
+
+      </div>
+    </div>
+
+  </div>
+
 </ion-content>

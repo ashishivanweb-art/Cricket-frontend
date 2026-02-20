@@ -1,0 +1,16 @@
+.over-balls {
+  display: flex;
+  gap: 10px;
+  font-size: 18px;
+}
+
+.ball {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}

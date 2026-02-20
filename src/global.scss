@@ -8,6 +8,53 @@
  * For more information on global stylesheets, visit the documentation:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ion-content, ion-page, ion-app {
+  --color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Force Ionic dark background */
+.dark-bg {
+  --background: #0f172a;
+  background: #0f172a;
+}
+
+/* Glass card effect */
+.glass-card {
+  @apply bg-gray-800/80 backdrop-blur-md rounded-2xl border border-gray-700 shadow-xl text-white;
+}
+
+/* Main button */
+.primary-btn {
+  @apply w-full mt-2 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold transition;
+}
+
+/* Quick action buttons */
+.action-btn {
+  @apply bg-gray-700 text-white py-3 rounded-xl font-semibold shadow-md hover:bg-indigo-600 transition;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
