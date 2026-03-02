@@ -16,7 +16,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/series/series.page').then( m => m.SeriesPage)
   },
   {
-    path: 'matches/:seriesId',
+    path: 'match/:seriesId',
     loadComponent: () => import('./pages/matches/matches.page').then( m => m.MatchesPage)
   },
   {
@@ -45,6 +45,21 @@ export const routes: Routes = [
     path: 'admin-teams',
     loadComponent: () => import('./admin/teams/teams.page').then( m => m.TeamsPage), canActivate: [AdminGuard]
   },
+  {
+    path: 'team-details/:id',
+    loadComponent: () => import('./admin/team-details/team-details.page').then( m => m.TeamDetailsPage), canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin-series',
+    loadComponent: () => import('./admin/series/series.page').then( m => m.SeriesPage), canActivate: [AdminGuard]
+  },
+  {
+    path: 'matches/:id',
+    loadComponent: () => import('./admin/matches/matches.page').then( m => m.MatchesPage), canActivate: [AdminGuard]
+  },
+
+
+
 
   
 ];

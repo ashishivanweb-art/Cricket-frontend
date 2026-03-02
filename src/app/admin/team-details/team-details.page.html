@@ -1,0 +1,94 @@
+<!-- 🔹 FIXED HEADER -->
+<ion-header class="ion-no-border">
+
+  <ion-toolbar class="dark-bg text-white">
+
+    <div class="p-5 space-y-1">
+      <h1 class="text-3xl font-bold tracking-wide cursor-pointer"
+          (click)="goHome()">
+        🏏 Cricket Live
+      </h1>
+
+      <p class="text-slate-400 text-sm">
+        Team Details
+      </p>
+
+      <!-- Team Info -->
+      <div class="mt-3">
+        <h2 class="text-lg font-semibold">
+          {{ team?.name }}
+        </h2>
+
+        <p class="text-slate-400 text-xs">
+          Short Name: {{ team?.shortName }}
+        </p>
+      </div>
+
+    </div>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<!-- 🔹 SCROLLABLE CONTENT -->
+<ion-content class="dark-bg text-white">
+
+  <div class="p-5">
+
+    <!-- Players Section -->
+    <div class="glass-card p-5">
+
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold">Players</h3>
+
+        <button
+          class="bg-green-600 px-3 py-1 rounded-lg
+                 hover:bg-green-700 transition text-sm"
+          (click)="openAddPlayerModal()">
+          + Add Player
+        </button>
+      </div>
+
+      <!-- Player Cards -->
+      <div
+        *ngFor="let player of team?.players"
+        class="bg-white/5 backdrop-blur-md rounded-xl p-4 mb-4 flex justify-between items-center">
+
+        <div>
+          <p class="text-white font-semibold text-lg">
+            {{ player?.name }}
+          </p>
+
+          <p class="text-slate-400 text-sm">
+            {{ player?.role }} • #{{ player?.jerseyNumber }}
+          </p>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <ion-icon
+            name="create-outline"
+            class="text-blue-400 text-xl cursor-pointer"
+            (click)="openEditPlayerModal(player)">
+          </ion-icon>
+
+          <ion-icon
+            name="trash-outline"
+            class="text-red-400 text-xl cursor-pointer"
+            (click)="confirmRemove(player._id)">
+          </ion-icon>
+        </div>
+
+      </div>
+
+      <ng-template #noPlayers>
+        <p class="text-slate-400 text-sm">
+          No players added yet.
+        </p>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</ion-content>

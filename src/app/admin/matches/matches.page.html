@@ -1,0 +1,245 @@
+<ion-content class="dark-bg text-white">
+
+  <div class="p-5 space-y-6">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl font-bold">🏏 Matches</h1>
+
+      <button
+        class="bg-green-600 px-4 py-2 rounded-lg
+               hover:bg-green-700 transition"
+        (click)="openAddMatchModal()">
+        + Add Match
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="matches.length === 0"
+         class="text-slate-400 text-center mt-10">
+      No matches created yet.
+    </div>
+
+    <!-- Match List -->
+    <div class="grid gap-4">
+
+      <div
+        *ngFor="let match of matches"
+        class="bg-white/5 backdrop-blur-md rounded-2xl p-4
+               flex items-center justify-between">
+
+        <!-- Left Section -->
+        <div class="flex flex-col">
+
+          <p class="text-white font-semibold text-lg">
+            {{ match.teamA?.name }} vs {{ match.teamB?.name }}
+          </p>
+
+          <p class="text-slate-400 text-sm">
+            {{ match.venue || 'Venue not set' }}
+          </p>
+
+          <p class="text-slate-500 text-xs mt-1">
+            Status: {{ match.status }}
+          </p>
+
+          <p class="text-green-400 text-xs mt-2">
+            {{ match.matchDateTime | date:'mediumDate' }}
+            {{ match.matchDateTime ? ('at ' + (match.matchDateTime | date:'shortTime')) : '' }}
+
+        </div>
+
+        <!-- Right Section -->
+        <div class="flex items-center gap-4">
+
+          <ion-icon
+            name="create-outline"
+            class="text-blue-400 text-xl cursor-pointer"
+            (click)="editMatch(match)">
+          </ion-icon>
+
+          <ion-icon
+            name="trash-outline"
+            class="text-red-400 text-xl cursor-pointer"
+            (click)="confirmRemoveMatch(match._id); $event.stopPropagation()">
+          </ion-icon>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>
+
+<!-- 🔹 Add / Edit Match Modal -->
+
+
+
+<div *ngIf="isModalOpen"
+     class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+  <div class="bg-slate-900 w-full max-w-2xl
+              max-h-[90vh]
+              rounded-2xl
+              flex flex-col">
+
+    <!-- HEADER -->
+    <div class="p-6 border-b border-slate-700
+                flex justify-between items-center">
+
+      <h2 class="text-xl font-semibold">
+        {{ newMatch._id ? 'Edit Match' : 'Create Match' }}
+      </h2>
+
+      <button (click)="closeModal()">
+        <ion-icon name="close-outline" class="text-2xl"></ion-icon>
+      </button>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="p-6 space-y-5 overflow-y-auto flex-1">
+
+      <!-- Team A -->
+    
+  <div class="field-wrapper">
+  <label class="field-label">Team A</label>
+
+  <ion-select
+    [(ngModel)]="newMatch.teamA"
+    (ionChange)="onTeamAChange(newMatch.teamA)"
+    interface="popover"
+    placeholder="Select Team"
+    class="dark-select">
+
+    <ion-select-option
+      *ngFor="let team of teams"
+      [value]="team._id"
+      [disabled]="team._id === newMatch.teamB">
+      {{ team.name }}
+    </ion-select-option>
+
+  </ion-select>
+</div>
+    
+
+    <!-- Team A Playing 11 -->
+<div *ngIf="teamAPlayers.length">
+  <label class="text-sm text-slate-400">
+    Team A Playing 11 (Select 11)
+  </label>
+  <span class="text-xs text-green-400">
+  {{ newMatch.teamAPlaying11?.length || 0 }}/11 selected
+</span>
+
+  <div class="grid grid-cols-2 gap-2 mt-2 max-h-40 overflow-y-auto">
+
+    <div *ngFor="let player of teamAPlayers"
+         class="flex items-center gap-2">
+
+   <input type="checkbox"
+         [checked]="isSelected(player._id, 'A')"
+         [disabled]="isDisabled(player._id, 'A')"
+         (change)="togglePlayer(player._id, 'A')">
+
+      <span class="text-sm">
+        {{ player.name }}
+      </span>
+
+    </div>
+
+  </div>
+</div>
+
+    <!-- Team B -->
+    <div class="field-wrapper">
+  <label class="field-label">Team B</label>
+
+  <ion-select
+    [(ngModel)]="newMatch.teamB"
+    (ionChange)="onTeamBChange(newMatch.teamB)"
+    interface="popover"
+    placeholder="Select Team"
+    class="dark-select">
+
+    <ion-select-option
+      *ngFor="let team of teams"
+      [value]="team._id"
+      [disabled]="team._id === newMatch.teamA">
+      {{ team.name }}
+    </ion-select-option>
+
+  </ion-select>
+</div>
+
+    <!-- Team B Playing 11 -->
+<div *ngIf="teamBPlayers.length">
+  <label class="text-sm text-slate-400">
+    Team B Playing 11 (Select 11)
+  </label>
+  <span class="text-xs text-green-400">
+  {{ newMatch.teamBPlaying11?.length || 0 }}/11 selected
+</span>
+
+  <div class="grid grid-cols-2 gap-2 mt-2 max-h-40 overflow-y-auto">
+
+    <div *ngFor="let player of teamBPlayers"
+         class="flex items-center gap-2">
+
+    <input type="checkbox"
+         [checked]="isSelected(player._id, 'B')"
+         [disabled]="isDisabled(player._id, 'B')"
+         (change)="togglePlayer(player._id, 'B')">
+      <span class="text-sm">
+        {{ player.name }}
+      </span>
+
+    </div>
+
+  </div>
+</div>
+
+    <!-- Venue -->
+    <div>
+      <label class="text-sm text-slate-400">Venue</label>
+      <input type="text"
+             [(ngModel)]="newMatch.venue"
+             class="w-full mt-1 p-2 rounded-lg bg-slate-800 text-white"
+             placeholder="Enter venue name">
+    </div>
+
+    <div>
+      <label class="text-sm text-slate-400">Match Date</label>
+      <input type="date" [(ngModel)]="newMatch.matchDate" class="w-full mt-1 p-2 rounded-lg bg-slate-800 text-white">
+    </div>
+    
+    <div>
+      <label class="text-sm text-slate-400">Start Time</label>
+      <input type="time" [(ngModel)]="newMatch.matchTime" class="w-full mt-1 p-2 rounded-lg bg-slate-800 text-white">
+    </div>
+
+
+    </div>
+
+    <!-- FIXED FOOTER -->
+    <div class="p-6 border-t border-slate-700
+                flex justify-end gap-3">
+
+      <button
+        class="px-4 py-2 rounded-lg bg-slate-700"
+        (click)="closeModal()">
+        Cancel
+      </button>
+
+      <button
+        class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700"
+        (click)="submitMatch()">
+        {{ newMatch._id ? 'Update' : 'Create' }}
+      </button>
+
+    </div>
+
+  </div>
+</div>

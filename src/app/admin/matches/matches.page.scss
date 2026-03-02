@@ -1,0 +1,41 @@
+.custom-item {
+  --background: #1e293b; /* slate-800 */
+  --border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.label-dark {
+  color: #94a3b8; /* slate-400 */
+  font-size: 14px;
+}
+
+.custom-select {
+  --color: white;
+  --placeholder-color: #94a3b8;
+  --icon-color: #94a3b8;
+}
+
+.field-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.field-label {
+  font-size: 13px;
+  color: #94a3b8; /* slate-400 */
+  margin-bottom: 6px;
+}
+
+.dark-select {
+  --background: #1e293b; /* slate-800 */
+  --color: #ffffff;
+  --placeholder-color: #94a3b8;
+  --border-radius: 12px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --min-height: 48px;
+  --icon-color: #94a3b8;
+
+  border-radius: 12px;
+}

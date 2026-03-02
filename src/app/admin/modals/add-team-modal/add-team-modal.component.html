@@ -1,0 +1,123 @@
+<ion-content class="dark-bg text-white">
+
+  <div class="min-h-full flex items-center justify-center p-6">
+
+    <!-- Modal Card -->
+    <div class="w-full max-w-md
+                bg-gradient-to-br from-white/10 to-white/5
+                backdrop-blur-xl
+                border border-white/10
+                rounded-3xl
+                shadow-2xl
+                p-6 space-y-6">
+
+      <!-- Header -->
+      <div class="text-center space-y-1">
+        <h2 class="text-2xl font-bold">
+          {{ isEditMode ? '✏️ Edit Team' : '🏏 Add Team' }}
+        </h2>
+        <p class="text-slate-400 text-sm">
+          Enter team details below
+        </p>
+      </div>
+
+      <!-- Form -->
+      <div class="space-y-4">
+
+        <!-- Team Name -->
+        <div class="space-y-1">
+          <label class="text-sm text-slate-400">Team Name</label>
+          <input
+            type="text"
+            [(ngModel)]="team.name"
+            placeholder="Enter full team name"
+            class="w-full bg-white/5
+                   border border-white/10
+                   p-3 rounded-xl
+                   focus:border-green-500
+                   focus:ring-2 focus:ring-green-500/20
+                   outline-none transition" />
+        </div>
+
+        <!-- Short Name -->
+        <div class="space-y-1">
+          <label class="text-sm text-slate-400">Short Name</label>
+          <input
+            type="text"
+            [(ngModel)]="team.shortName"
+            placeholder="Ex: RCB, MI, CSK"
+            class="w-full bg-white/5
+                   border border-white/10
+                   p-3 rounded-xl
+                   focus:border-green-500
+                   focus:ring-2 focus:ring-green-500/20
+                   outline-none transition" />
+        </div>
+
+        <!-- Logo Upload -->
+        <div class="space-y-2">
+
+          <label class="text-sm text-slate-400">Team Logo</label>
+
+          <div class="bg-white/5 border border-white/10
+                      rounded-xl p-4 text-center
+                      hover:border-blue-500 transition">
+
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onLogoSelected($event)"
+              class="block w-full text-sm text-slate-300
+                     file:mr-4 file:py-2 file:px-4
+                     file:rounded-lg file:border-0
+                     file:text-sm file:font-semibold
+                     file:bg-blue-600 file:text-white
+                     hover:file:bg-blue-700" />
+
+            <!-- Preview -->
+            <div *ngIf="team.logo"
+                 class="mt-4 flex justify-center">
+              <img
+                [src]="team.logo"
+                class="w-24 h-24 object-cover
+                       rounded-2xl
+                       border-2 border-white/20
+                       shadow-lg" />
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Buttons -->
+      <div class="space-y-3 pt-2">
+
+        <button
+          class="w-full bg-green-600 hover:bg-green-700
+                 py-3 rounded-xl font-semibold
+                 transition shadow-lg"
+          (click)="submit()">
+
+          {{ isEditMode ? 'Update Team' : 'Create Team' }}
+
+        </button>
+
+        <button
+          class="w-full bg-red-600/80 hover:bg-red-700
+                 py-3 rounded-xl font-medium
+                 transition"
+          (click)="closeModal()">
+
+          Cancel
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

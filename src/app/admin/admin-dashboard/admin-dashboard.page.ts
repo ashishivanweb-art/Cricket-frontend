@@ -27,4 +27,7 @@ goToTeams() {
   this.router.navigate(['/admin-teams']);
 }
 
+goToSeries() {
+  this.router.navigate(['/admin-series']);
+}
 }
