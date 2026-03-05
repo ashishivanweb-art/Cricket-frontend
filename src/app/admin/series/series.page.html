@@ -1,0 +1,130 @@
+<ion-content class="dark-bg text-white">
+
+  <div class="p-5 space-y-6">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl font-bold">🏏 Series</h1>
+
+      <button
+        class="bg-green-600 px-4 py-2 rounded-lg
+               hover:bg-green-700 transition"
+        (click)="openAddSeriesModal()">
+        + Add Series
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="seriesList.length === 0"
+         class="text-slate-400 text-center mt-10">
+      No series created yet.
+    </div>
+
+    <!-- Series List -->
+    <div class="grid gap-4">
+
+      <div
+        *ngFor="let series of seriesList"
+        class="bg-white/5 backdrop-blur-md rounded-2xl p-4
+               flex items-center justify-between"
+               >
+
+        <!-- Left Section -->
+        <div (click)="viewMatches(series)" class="flex flex-col cursor-pointer">
+
+          <p class="text-white font-semibold text-lg">
+            {{ series.name }}
+          </p>
+
+          <p class="text-slate-400 text-sm">
+            {{ series.type }}
+          </p>
+
+          <p class="text-slate-500 text-xs mt-1">
+            {{ series.startDate | date:'mediumDate' }}
+            -
+            {{ series.endDate | date:'mediumDate' }}
+          </p>
+
+          <p class="text-green-400 text-xs mt-2">
+            {{ series.totalMatches }} Matches
+          </p>
+
+        </div>
+
+        <!-- Right Section (Icons) -->
+        <div class="flex items-center gap-4">
+
+          <ion-icon
+            name="create-outline"
+            class="text-blue-400 text-xl cursor-pointer"
+            (click)="editSeries(series)">
+          </ion-icon>
+
+          <ion-icon
+            name="trash-outline"
+            class="text-red-400 text-xl cursor-pointer"
+            (click)="deleteSeries(series._id)">
+          </ion-icon>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>
+
+<!-- Modal -->
+<div *ngIf="showModal"
+     class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+  <div class="bg-slate-900 p-6 rounded-2xl w-[90%] max-w-md space-y-4">
+
+    <h2 class="text-xl font-semibold">
+      {{ isEditMode ? 'Update Series' : 'Add Series' }}
+    </h2>
+
+    <input
+      type="text"
+      placeholder="Series Name"
+      [(ngModel)]="series.name"
+      class="w-full bg-white/5 p-3 rounded-lg outline-none" />
+
+    <input
+      type="text"
+      placeholder="Type (ODI, T20, Test)"
+      [(ngModel)]="series.type"
+      class="w-full bg-white/5 p-3 rounded-lg outline-none" />
+
+    <input
+      type="date"
+      [(ngModel)]="series.startDate"
+      class="w-full bg-white/5 p-3 rounded-lg outline-none" />
+
+    <input
+      type="date"
+      [(ngModel)]="series.endDate"
+      class="w-full bg-white/5 p-3 rounded-lg outline-none" />
+
+    <div class="flex gap-3">
+
+      <button
+        class="flex-1 bg-green-600 py-3 rounded-lg"
+        (click)="submitSeries()">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+
+      <button
+        class="flex-1 bg-red-600 py-3 rounded-lg"
+        (click)="showModal=false">
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

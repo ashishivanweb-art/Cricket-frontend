@@ -6,13 +6,10 @@
     <div class="flex justify-between items-center">
       <h1 class="text-2xl font-bold">🏏 Teams</h1>
 
-      <button
-        (click)="openAddTeam()"
-        class="bg-blue-600 px-4 py-2 rounded-lg
-               hover:bg-blue-700 transition"
-      >
-        ➕ Add Team
-      </button>
+    <button class="bg-green-600 px-4 py-2 rounded-lg
+             hover:bg-green-700 transition" (click)="openAddTeamModal()">
+      + Add Team
+    </button>
     </div>
 
     <!-- Teams List -->
@@ -21,24 +18,83 @@
       No teams created yet.
     </div>
 
-    <div class="grid gap-4">
+    <div class="grid gap-5">
 
-      <div *ngFor="let team of teams"
-           class="glass-card p-4 cursor-pointer
-                  hover:scale-[1.02] transition"
-           (click)="openTeam(team._id)">
+  <div
+    *ngFor="let team of teams"
+    class="bg-gradient-to-br from-white/10 to-white/5 
+           backdrop-blur-xl rounded-2xl p-4
+           flex items-center justify-between
+           border border-white/10
+           hover:scale-[1.02] hover:shadow-xl
+           transition-all duration-300">
 
-        <h2 class="text-lg font-semibold">
-          {{ team.name }}
-        </h2>
+    <!-- Left Section -->
+    <div 
+      class="flex items-center gap-4 cursor-pointer flex-1"
+      (click)="openTeam(team?._id)">
 
-        <p class="text-slate-400 text-sm">
-          Players: {{ team.players?.length || 0 }}
-        </p>
+      <!-- Logo -->
+      <div class="relative">
+        <img
+          [src]="team?.logo"
+          alt="logo"
+          class="w-16 h-16 rounded-full object-cover
+                 border-2 border-white/20 shadow-md" />
 
+        <!-- Glow ring -->
+        <div class="absolute inset-0 rounded-full
+                    border border-green-500/30"></div>
       </div>
 
+      <!-- Team Info -->
+      <div class="space-y-1">
+        <p class="text-white font-semibold text-lg tracking-wide">
+          {{ team?.name }}
+        </p>
+
+        <p class="text-slate-400 text-sm">
+          {{ team?.shortName }}
+        </p>
+
+        <p class="text-xs text-slate-500">
+          {{ team?.players.length }} Players
+        </p>
+      </div>
     </div>
+
+    <!-- Right Section -->
+    <div class="flex items-center gap-3 ml-4">
+
+      <button
+        class="bg-blue-500/20 hover:bg-blue-500/30
+               p-2 rounded-full transition"
+        (click)="openEditTeamModal(team); $event.stopPropagation()">
+
+        <ion-icon
+          name="create-outline"
+          class="text-blue-400 text-lg">
+        </ion-icon>
+
+      </button>
+
+      <button
+        class="bg-red-500/20 hover:bg-red-500/30
+               p-2 rounded-full transition"
+        (click)="confirmRemoveTeam(team._id); $event.stopPropagation()">
+
+        <ion-icon
+          name="trash-outline"
+          class="text-red-400 text-lg">
+        </ion-icon>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
   </div>
 
